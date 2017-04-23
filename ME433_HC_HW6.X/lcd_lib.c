@@ -189,3 +189,21 @@ void LCD_clearScreen(unsigned short color) {
 			LCD_data16(color);
 		}
 }
+
+ void drawCharacter(unsigned short x, unsigned short y, char a){
+    int i; int j; 
+    if (x<126 && y<125){
+    char c=a-0x20;
+        for(i=0;i<5;i=i+1){
+        const char s = ASCII[c][i];
+            for(j=0;j<8;j=j+1){
+                if((s>>j)& 0x01){
+                    LCD_drawPixel(x+i,y+j,BLACK);
+                }else{
+                    LCD_drawPixel(x+i,y+j,RED);
+                }
+            }
+        }
+    }
+ }
+    
