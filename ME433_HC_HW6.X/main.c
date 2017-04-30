@@ -65,10 +65,19 @@ int main() {
     LCD_init();
     LCD_clearScreen(RED);
     char message[100];
-    sprintf(message,"Hello world %%d!");
-    drawString(28, 32, message);
+    float fps;
+    
     while(1) {
+        _CP0_SET_COUNT(0);
+        sprintf(message,"Hello world %%d!");
+        drawString(28, 32, message);
         progressbar();
+        fps=25000000/_CP0_GET_COUNT();
+        
+        sprintf(message,"FPS: ");
+        drawString(30,75, message);
+        sprintf(message,"%5.2f",fps);
+        drawString(55,75, message);
         
         _CP0_SET_COUNT(0);
         while(_CP0_GET_COUNT()<25000){;} //0.001/(1/25000000)

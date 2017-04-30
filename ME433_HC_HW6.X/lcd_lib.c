@@ -15,6 +15,7 @@
 
 #include <xc.h>
 #include "lcd_lib.h"
+#include "stdio.h"
 
 
 void SPI1_init() {
@@ -221,12 +222,12 @@ void LCD_clearScreen(unsigned short color) {
      int j; int i; int k;
      
      for(j=0; j<5;j=j+1){
-         for(k=0; k<100; k=k+1){
+         for(k=0; k<101; k=k+1){
             LCD_drawPixel(15+k,45+j,BLUE);
          }
      }
      
-     for(i=0;i<100;i=i+1){
+     for(i=0;i<101;i=i+1){
          _CP0_SET_COUNT(0);
         while(_CP0_GET_COUNT()<5000000){;}
         LCD_drawPixel(15+i,45,GREEN);
@@ -234,6 +235,10 @@ void LCD_clearScreen(unsigned short color) {
         LCD_drawPixel(15+i,47,GREEN);
         LCD_drawPixel(15+i,48,GREEN);
         LCD_drawPixel(15+i,49,GREEN);
+        char percent[50];
+       
+        sprintf(percent,"%3d%%",i);
+        drawString(55,55,percent);
         _CP0_SET_COUNT(0);
      }
          
