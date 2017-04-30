@@ -1,6 +1,7 @@
 #include<xc.h>           // processor SFR definitions
 #include<sys/attribs.h>  // __ISR macro
 #include "lcd_lib.h"
+#include "stdio.h"
 
 // DEVCFG0
 #pragma config DEBUG = 0b11 // no debugging
@@ -63,8 +64,12 @@ int main() {
     SPI1_init();
     LCD_init();
     LCD_clearScreen(RED);
-    drawCharacter(10, 10,'h');
+    char message[100];
+    sprintf(message,"Hello world %%d!");
+    drawString(28, 32, message);
     while(1) {
+        progressbar();
+        
         _CP0_SET_COUNT(0);
         while(_CP0_GET_COUNT()<25000){;} //0.001/(1/25000000)
         LATAINV=0b10000;

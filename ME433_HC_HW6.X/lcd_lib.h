@@ -177,6 +177,8 @@ static unsigned char nGammaSet[15]= {0x09,0x16,0x2D,0x0D,0x13,0x15,0x40,0x48,0x5
 
 unsigned char spi_io(unsigned char); // send and rx a byte over spi
 void drawCharacter(unsigned short x, unsigned short y,char a);
+void drawString(unsigned short x, unsigned short y,char a[]);
+void progressbar();
 void LCD_command(unsigned char); // send a command to the LCD
 void LCD_data(unsigned char); // send data to the LCD
 void LCD_data16(unsigned short); // send 16 bit data to the LCD

@@ -16,6 +16,7 @@
 #include <xc.h>
 #include "lcd_lib.h"
 
+
 void SPI1_init() {
 	SDI1Rbits.SDI1R = 0b0100; // B8 is SDI1
     RPA1Rbits.RPA1R = 0b0011; // A1 is SDO1
@@ -190,10 +191,10 @@ void LCD_clearScreen(unsigned short color) {
 		}
 }
 
- void drawCharacter(unsigned short x, unsigned short y, char a){
-    int i; int j; 
+ void drawCharacter(unsigned short x, unsigned short y, char m){
+    int i; int j;
     if (x<126 && y<125){
-    char c=a-0x20;
+        char c=m-0x20;
         for(i=0;i<5;i=i+1){
         const char s = ASCII[c][i];
             for(j=0;j<8;j=j+1){
@@ -205,5 +206,36 @@ void LCD_clearScreen(unsigned short color) {
             }
         }
     }
+ }
+ 
+ void drawString(unsigned short x, unsigned short y, char a[]){
+     int i=0;
+     
+     while(a[i]){
+         drawCharacter(x+5*i,y,a[i]);
+         i=i+1;
+     }
+ }
+ 
+ void progressbar(){
+     int j; int i; int k;
+     
+     for(j=0; j<5;j=j+1){
+         for(k=0; k<100; k=k+1){
+            LCD_drawPixel(15+k,45+j,BLUE);
+         }
+     }
+     
+     for(i=0;i<100;i=i+1){
+         _CP0_SET_COUNT(0);
+        while(_CP0_GET_COUNT()<5000000){;}
+        LCD_drawPixel(15+i,45,GREEN);
+        LCD_drawPixel(15+i,46,GREEN);
+        LCD_drawPixel(15+i,47,GREEN);
+        LCD_drawPixel(15+i,48,GREEN);
+        LCD_drawPixel(15+i,49,GREEN);
+        _CP0_SET_COUNT(0);
+     }
+         
  }
     
