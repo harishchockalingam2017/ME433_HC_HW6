@@ -17,7 +17,6 @@
 #include "lcd_lib.h"
 #include "stdio.h"
 
-
 void SPI1_init() {
 	SDI1Rbits.SDI1R = 0b0100; // B8 is SDI1
     RPA1Rbits.RPA1R = 0b0011; // A1 is SDO1
@@ -220,27 +219,39 @@ void LCD_clearScreen(unsigned short color) {
  
  void progressbar(){
      int j; int i; int k;
-     
-     for(j=0; j<5;j=j+1){
-         for(k=0; k<101; k=k+1){
-            LCD_drawPixel(15+k,45+j,BLUE);
-         }
-     }
+     char message[100];
+     char percent[50];
+     float fps;
      
      for(i=0;i<101;i=i+1){
-         _CP0_SET_COUNT(0);
-        while(_CP0_GET_COUNT()<5000000){;}
-        LCD_drawPixel(15+i,45,GREEN);
-        LCD_drawPixel(15+i,46,GREEN);
-        LCD_drawPixel(15+i,47,GREEN);
-        LCD_drawPixel(15+i,48,GREEN);
-        LCD_drawPixel(15+i,49,GREEN);
-        char percent[50];
-       
         sprintf(percent,"%3d%%",i);
-        drawString(55,55,percent);
-        _CP0_SET_COUNT(0);
-     }
+         _CP0_SET_COUNT(0);
+        while(_CP0_GET_COUNT()<4800000){;}
          
+         _CP0_SET_COUNT(0);
+         for(j=0; j<5;j=j+1){
+         for(k=0; k<101; k=k+1){
+             if(k<i){
+            LCD_drawPixel(15+k,45+j,BLUE);
+             }
+             else if(k>=i){
+            LCD_drawPixel(15+k,45+j,GREEN);
+//            LCD_drawPixel(15+i,46,GREEN);
+//            LCD_drawPixel(15+i,47,GREEN);
+//            LCD_drawPixel(15+i,48,GREEN);
+//            LCD_drawPixel(15+i,49,GREEN); 
+            }
+         }
+     }
+        drawString(55,55,percent);
+        
+        fps=(float)24000000/_CP0_GET_COUNT();
+        
+        sprintf(message,"FPS: ");
+        drawString(30,75, message);
+        sprintf(message,"%5.2f",fps);
+        drawString(55,75, message);   
+     }
+        
  }
     
