@@ -1,10 +1,10 @@
 # ME433_HC_HW6
-Total pixels 128*128
-Pixel per character:8*5
-Total number of characters on screen: (128*128)/(8*5)=409.6
+Total pixels 128 by 128
+Pixel per character:8 by 5
+Total number of characters on screen: (128x128)/(8x5)=409.6
 
-Per row total pixels 8*128
-Max characters = (8*128)/(8*5)=25.6
+Per row total pixels 8x128
+Max characters = (8x128)/(8x5)=25.6
 
 number of ticks to turn on 5 pixels: 
 (fps based on progressbar that increments by 1% every 0.2s)
